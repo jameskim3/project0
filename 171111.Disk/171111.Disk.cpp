@@ -31,6 +31,12 @@ void _read_file(int no, int pos, char data[4096], int size)
 
 void _write_file(int no, int pos, char data[4096], int size)
 {
+	if (pos + size > 65536)
+		size = 65536 - pos;
+	if (pos + size > FILE_SIZE[no])
+		FILE_SIZE[no] = pos + size;
+
+	memcpy(FILE_DATA[no] + pos, data, size);
 }
 
 extern void read_disk_usr(int no, int pos, char data[4096], int size);
